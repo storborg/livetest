@@ -39,8 +39,13 @@ from webtest import BaseCookie, CookieError
 
 
 class TestApp(webtest.TestApp):
-    def __init__(self, host):
-        self.conn = httplib.HTTPConnection(host)
+    def __init__(self, host, schema='http'):
+        if schema == 'http':
+            self.conn = httplib.HTTPConnection(host)
+        elif schema == 'https':
+            self.conn = httplib.HTTPSConnection(host)
+        else:
+            raise ValueError("Schema '%s' is not supported." % schema)
         self.extra_environ = {}
         self.reset()
 
