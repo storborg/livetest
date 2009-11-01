@@ -14,5 +14,6 @@ setup(name='livetest',
       url='http://github.com/storborg/livetest',
       packages=find_packages(exclude=['ez_setup', 'tests']),
       install_requires=['WebTest'],
+      test_requires=['nose>=0.11'],
       test_suite='nose.collector',
       zip_safe=False)
