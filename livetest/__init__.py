@@ -48,6 +48,22 @@ class TestApp(webtest.TestApp):
         self.extra_environ = {}
         self.reset()
 
+    def _send_httplib_request(self, req):
+        "Convert WebOb Request to httplib request."
+        headers = dict((name, val) for name, val in req.headers.iteritems()
+                       if name != 'Host')
+        self.conn.request(req.method, req.path_qs, req.body, headers)
+
+    def _receive_httplib_request(self):
+        "Convert httplib response to WebOb Response."
+        webresp = self.conn.getresponse()
+        res = webtest.TestResponse()
+        res.status = '%s %s' % (webresp.status, webresp.reason)
+        res.body = webresp.read()
+        res.headerlist = webresp.getheaders()
+        res.errors = ''
+        return res
+
     def do_request(self, req, status, expect_errors):
         """
         Override webtest.TestApp's method so that we do real HTTP requests
@@ -60,23 +76,15 @@ class TestApp(webtest.TestApp):
                 c[name] = value
             headers['HTTP_COOKIE'] = str(c).split(': ', 1)[1]
 
-        # FIXME Need to grab a lot of other headers too.
+        self._send_httplib_request(req)
 
-        # Convert WebOb Request to httplib request.
-        self.conn.request(req.method, req.path_qs, req.body, headers)
-
-        # Convert httplib response to WebOb Response.
-        webresp = self.conn.getresponse()
-        res = webtest.TestResponse()
-        res.status = '%s %s' % (webresp.status, webresp.reason)
-        res.body = webresp.read()
-        res.headerlist = webresp.getheaders()
-        res.errors = ''
+        res = self._receive_httplib_request()
+        # Set these attributes for consistency with webtest.
         res.request = req
         res.test_app = self
 
         if not expect_errors:
-            self._check_status(webresp.status, res)
+            self._check_status(res.status_int, res)
             self._check_errors(res)
         res.cookies_set = {}
 
@@ -90,5 +98,3 @@ class TestApp(webtest.TestApp):
                 self.cookies[key] = morsel.value
                 res.cookies_set[key] = morsel.value
         return res
-
-
