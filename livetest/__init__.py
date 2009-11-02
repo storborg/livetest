@@ -33,31 +33,41 @@ Test stuff in the response:
 
 __author__ = 'scott@crookedmedia.com'
 
+import sys
 import webtest
 import httplib
+import urlparse
 from webtest import BaseCookie, CookieError
+
+conn_classes = {'http': httplib.HTTPConnection,
+                'https': httplib.HTTPSConnection}
 
 
 class TestApp(webtest.TestApp):
-    def __init__(self, host, schema='http'):
-        if schema == 'http':
-            self.conn = httplib.HTTPConnection(host)
-        elif schema == 'https':
-            self.conn = httplib.HTTPSConnection(host)
+    def _load_conn(self, scheme):
+        if scheme in conn_classes:
+            self.conn[scheme] = conn_classes[scheme](self.host)
         else:
-            raise ValueError("Schema '%s' is not supported." % schema)
+            raise ValueError("Scheme '%s' is not supported." % scheme)
+
+    def __init__(self, host, scheme='http'):
+        self.host = host
+        self.conn = {}
+        self._load_conn(scheme)
         self.extra_environ = {}
         self.reset()
 
-    def _send_httplib_request(self, req):
+    def _do_httplib_request(self, req):
         "Convert WebOb Request to httplib request."
         headers = dict((name, val) for name, val in req.headers.iteritems()
                        if name != 'Host')
-        self.conn.request(req.method, req.path_qs, req.body, headers)
+        if req.scheme not in self.conn:
+            self._load_conn(req.scheme)
 
-    def _receive_httplib_request(self):
-        "Convert httplib response to WebOb Response."
-        webresp = self.conn.getresponse()
+        conn = self.conn[req.scheme]
+        conn.request(req.method, req.path_qs, req.body, headers)
+
+        webresp = conn.getresponse()
         res = webtest.TestResponse()
         res.status = '%s %s' % (webresp.status, webresp.reason)
         res.body = webresp.read()
@@ -75,11 +85,9 @@ class TestApp(webtest.TestApp):
             c = BaseCookie()
             for name, value in self.cookies.items():
                 c[name] = value
-            headers['HTTP_COOKIE'] = str(c).split(': ', 1)[1]
+            req.headers['Cookie'] = str(c).split(': ', 1)[1]
 
-        self._send_httplib_request(req)
-
-        res = self._receive_httplib_request()
+        res = self._do_httplib_request(req)
         # Set these attributes for consistency with webtest.
         res.request = req
         res.test_app = self
@@ -99,3 +107,26 @@ class TestApp(webtest.TestApp):
                 self.cookies[key] = morsel.value
                 res.cookies_set[key] = morsel.value
         return res
+
+
+def goto(self, href, method='get', **args):
+    """
+    Monkeypatch the TestResponse.goto method so that it doesn't wipe out the
+    scheme and host.
+    """
+    scheme, host, path, query, fragment = urlparse.urlsplit(href)
+    # We
+    fragment = ''
+    href = urlparse.urlunsplit((scheme, host, path, query, fragment))
+    href = urlparse.urljoin(self.request.url, href)
+    method = method.lower()
+    assert method in ('get', 'post'), (
+        'Only "get" or "post" are allowed for method (you gave %r)'
+        % method)
+    if method == 'get':
+        method = self.test_app.get
+    else:
+        method = self.test_app.post
+    return method(href, **args)
+
+webtest.TestResponse.goto = goto
