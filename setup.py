@@ -6,9 +6,9 @@ except ImportError:
     from setuptools import setup, find_packages
 
 setup(name='livetest',
-      version='0.2dev',
-      description='Live WebTesting',
-      long_description='Make live website tests look like Paste WebTest',
+      version='0.3dev',
+      description='Make live website tests look like Paste WebTest',
+      long_description=file('README.rst').read(),
       classifiers=[
           "Development Status :: 3 - Alpha",
           "Environment :: Web Environment",
@@ -24,7 +24,8 @@ setup(name='livetest',
       url='http://github.com/storborg/livetest/tarball/master',
       license='MIT',
       packages=find_packages(exclude=['ez_setup', 'tests']),
-      install_requires=['WebTest'],
-      test_requires=['nose>=0.11'],
+      include_package_data=True,
+      install_requires=['WebTest>=1.2'],
+      tests_require=['nose>=0.10'],
       test_suite='nose.collector',
       zip_safe=False)
