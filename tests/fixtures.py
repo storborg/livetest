@@ -20,7 +20,6 @@ class ServerFixture(unittest.TestCase):
             # tests faster, too.
             time.sleep(0.1)
         else:
-            # Silence sys.stdout
             sys.stderr = StringIO()
             httpd = make_server('', 8000, self.make_app())
             httpd.serve_forever()
