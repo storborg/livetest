@@ -1,7 +1,7 @@
 LiveTest - Like WebTest, but on a live site
 ===========================================
 
-Inspired by Ian Bicking's excellent [WebTest module](http://pythonpaste.org/webtest/), this is an extension to allow the same sort of simple pythonic testing to be used against running sites. Many tests written for WebTest will be able to be used directly on LiveTest.
+Inspired by Ian Bicking's excellent `WebTest <http://pythonpaste.org/webtest/>`_, this is an extension to allow the same sort of simple pythonic testing to be used against running sites. Many tests written for WebTest will be able to be used directly on LiveTest.
 
 This enables the full platform (app servers, load balancers, routing, DNS, etc) to be tested rather than just the internal WSGI application.
 
