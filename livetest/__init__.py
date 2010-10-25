@@ -85,7 +85,8 @@ class TestApp(webtest.TestApp):
             c = BaseCookie()
             for name, value in self.cookies.items():
                 c[name] = value
-            req.headers['Cookie'] = str(c).split(': ', 1)[1]
+            hc = '; '.join(['='.join([m.key, m.value]) for m in c.values()])
+            req.headers['Cookie'] = hc
 
         res = self._do_httplib_request(req)
         # Set these attributes for consistency with webtest.
