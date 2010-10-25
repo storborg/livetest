@@ -31,7 +31,7 @@ Test stuff in the response:
 
 """
 
-__author__ = 'scott@crookedmedia.com'
+__author__ = 'storborg@mit.edu'
 
 import sys
 import webtest

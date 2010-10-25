@@ -6,7 +6,7 @@ except ImportError:
     from setuptools import setup, find_packages
 
 setup(name='livetest',
-      version='0.3dev',
+      version='0.4',
       description='Make live website tests look like Paste WebTest',
       long_description=file('README.rst').read(),
       classifiers=[
