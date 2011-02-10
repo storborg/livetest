@@ -50,8 +50,9 @@ class TestApp(webtest.TestApp):
         else:
             raise ValueError("Scheme '%s' is not supported." % scheme)
 
-    def __init__(self, host, scheme='http'):
+    def __init__(self, host, scheme='http', relative_to=None):
         self.host = host
+        self.relative_to = relative_to
         self.conn = {}
         self._load_conn(scheme)
         self.extra_environ = {}
