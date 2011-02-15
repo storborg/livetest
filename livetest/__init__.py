@@ -4,28 +4,28 @@ LiveTest - Like WebTest, but on a live site.
 Setup an app to test against with just a hostname:
 
 >>> import livetest
->>> app = livetest.TestApp('www.google.com')
+>>> app = livetest.TestApp('pypi.python.org')
 
 Make requests just like WebTest:
 
->>> resp = app.get('/')
+>>> resp = app.get('/pypi')
 
 Grab forms:
 
 >>> resp.forms # doctest: +ELLIPSIS
-{0: <webtest.Form object at 0x...>}
+{0: <webtest.Form object at 0x...>, 1: <webtest.Form object at 0x...>, u'searchform': <webtest.Form object at 0x...>}
 >>> form = resp.forms[0]
 >>> form.fields # doctest: +ELLIPSIS
-{'btnI': [<webtest.Submit object at 0x...>], 'btnG': [<webtest.Submit object at 0x...>], 'q': [<webtest.Text object at 0x...>], 'source': [<webtest.Hidden object at 0x...>], 'hl': [<webtest.Hidden object at 0x...>], 'ie': [<webtest.Hidden object at 0x...>]}
+{u'term': [<webtest.Text object at 0x...>], u':action': [<webtest.Hidden object at 0x...>], u'submit': [<webtest.Submit object at 0x...>]}
 
 Submit forms:
 
->>> form['q'] = 'python testing'
+>>> form['term'] = 'python testing'
 >>> resp = form.submit()
 
 Test stuff in the response:
 
->>> resp.mustcontain('Agile', 'unittest', 'PyUnit')
+>>> resp.mustcontain('livetest', 'Index', 'Package')
 >>> resp.status
 '200 OK'
 
