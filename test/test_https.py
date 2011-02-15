@@ -1,5 +1,6 @@
 import livetest
 
+
 def test_unsupported_schema():
     try:
         app = livetest.TestApp('localhost', scheme='ldap')

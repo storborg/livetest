@@ -10,6 +10,7 @@ try:
 except ImportError:
     from StringIO import StringIO
 
+
 class ServerFixture(unittest.TestCase):
     def setUp(self):
         pid = os.fork()
@@ -26,4 +27,3 @@ class ServerFixture(unittest.TestCase):
 
     def tearDown(self):
         os.kill(self.pid, signal.SIGKILL)
-

@@ -12,11 +12,15 @@ Make requests just like WebTest:
 
 Grab forms:
 
->>> resp.forms # doctest: +ELLIPSIS
-{0: <webtest.Form object at 0x...>, 1: <webtest.Form object at 0x...>, u'searchform': <webtest.Form object at 0x...>}
+>>> resp.forms # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+{0: <webtest.Form object at 0x...>,
+ 1: <webtest.Form object at 0x...>,
+ u'searchform': <webtest.Form object at 0x...>}
 >>> form = resp.forms[0]
->>> form.fields # doctest: +ELLIPSIS
-{u'term': [<webtest.Text object at 0x...>], u':action': [<webtest.Hidden object at 0x...>], u'submit': [<webtest.Submit object at 0x...>]}
+>>> form.fields # doctest: +ELLIPSIS +NORMALIZE_WHITESPACE
+{u'term': [<webtest.Text object at 0x...>],
+ u':action': [<webtest.Hidden object at 0x...>],
+ u'submit': [<webtest.Submit object at 0x...>]}
 
 Submit forms:
 

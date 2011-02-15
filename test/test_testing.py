@@ -27,8 +27,8 @@ class TestBasic(ServerFixture):
         assert res.headers['content-type'] == 'text/plain'
         assert res.content_type == 'text/plain'
         self.app.get('/?status=404%20Not%20Found', status=404)
+
         class FakeDict(object):
             def items(self):
                 return [('a', '10'), ('a', '20')]
         res = self.app.post('/params', params=FakeDict())
-

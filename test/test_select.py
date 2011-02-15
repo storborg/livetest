@@ -50,7 +50,7 @@ class TestSelect(ServerFixture):
             </body>
         </html>
         """ % locals()
-            
+
             headers = [
                 ('Content-Type', 'text/html'),
                 ('Content-Length', str(len(body)))]
@@ -63,17 +63,17 @@ class TestSelect(ServerFixture):
         assert res.status_int == 200
         assert res.headers['content-type'] == 'text/html'
         assert res.content_type == 'text/html'
-        
+
         single_form = res.forms["single_select_form"]
         assert single_form["single"].value == "5"
         display = single_form.submit("button")
         assert "<p>You selected 5</p>" in display, display
-        
+
         res = self.app.get('/')
         assert res.status_int == 200
         assert res.headers['content-type'] == 'text/html'
         assert res.content_type == 'text/html'
-        
+
         single_form = res.forms["single_select_form"]
         assert single_form["single"].value == "5"
         single_form.set("single", "6")
@@ -86,7 +86,7 @@ class TestSelect(ServerFixture):
         assert res.status_int == 200
         assert res.headers['content-type'] == 'text/html'
         assert res.content_type == 'text/html'
-        
+
         single_form = res.forms["single_select_form"]
         assert single_form["single"].value == "5"
         try:
@@ -98,24 +98,24 @@ class TestSelect(ServerFixture):
         assert single_form["single"].value == "984"
         display = single_form.submit("button")
         assert "<p>You selected 984</p>" in display, display
-        
+
     def test_multiple_select(self):
         res = self.app.get('/')
         assert res.status_int == 200
         assert res.headers['content-type'] == 'text/html'
         assert res.content_type == 'text/html'
-        
+
         multiple_form = res.forms["multiple_select_form"]
         assert multiple_form["multiple"].value == ['8', '11'],\
             multiple_form["multiple"].value
         display = multiple_form.submit("button")
         assert "<p>You selected 8, 11</p>" in display, display
-        
+
         res = self.app.get('/')
         assert res.status_int == 200
         assert res.headers['content-type'] == 'text/html'
         assert res.content_type == 'text/html'
-        
+
         multiple_form = res.forms["multiple_select_form"]
         assert multiple_form["multiple"].value == ["8", "11"],\
             multiple_form["multiple"].value
@@ -130,7 +130,7 @@ class TestSelect(ServerFixture):
         assert res.status_int == 200
         assert res.headers['content-type'] == 'text/html'
         assert res.content_type == 'text/html'
-        
+
         multiple_form = res.forms["multiple_select_form"]
         assert multiple_form["multiple"].value == ["8", "11"],\
             multiple_form["multiple"].value
@@ -194,7 +194,7 @@ class TestSelectNoDefault(ServerFixture):
             </body>
         </html>
         """ % locals()
-            
+
             headers = [
                 ('Content-Type', 'text/html'),
                 ('Content-Length', str(len(body)))]
@@ -207,41 +207,41 @@ class TestSelectNoDefault(ServerFixture):
         assert res.status_int == 200
         assert res.headers['content-type'] == 'text/html'
         assert res.content_type == 'text/html'
-        
+
         single_form = res.forms["single_select_form"]
         assert single_form["single"].value == "4"
         display = single_form.submit("button")
         assert "<p>You selected 4</p>" in display, display
-        
+
         res = self.app.get('/')
         assert res.status_int == 200
         assert res.headers['content-type'] == 'text/html'
         assert res.content_type == 'text/html'
-        
+
         single_form = res.forms["single_select_form"]
         assert single_form["single"].value == "4"
         single_form.set("single", "6")
         assert single_form["single"].value == "6"
         display = single_form.submit("button")
         assert "<p>You selected 6</p>" in display, display
-     
+
     def test_multiple_select_no_default(self):
         res = self.app.get('/')
         assert res.status_int == 200
         assert res.headers['content-type'] == 'text/html'
         assert res.content_type == 'text/html'
-        
+
         multiple_form = res.forms["multiple_select_form"]
         assert multiple_form["multiple"].value is None,\
             repr(multiple_form["multiple"].value)
         display = multiple_form.submit("button")
         assert "<p>You selected </p>" in display, display
-        
+
         res = self.app.get('/')
         assert res.status_int == 200
         assert res.headers['content-type'] == 'text/html'
         assert res.content_type == 'text/html'
-        
+
         multiple_form = res.forms["multiple_select_form"]
         assert multiple_form["multiple"].value is None,\
             multiple_form["multiple"].value
@@ -250,4 +250,3 @@ class TestSelectNoDefault(ServerFixture):
             multiple_form["multiple"].value
         display = multiple_form.submit("button")
         assert "<p>You selected 9</p>" in display, display
-
