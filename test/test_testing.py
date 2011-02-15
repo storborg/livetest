@@ -32,3 +32,7 @@ class TestBasic(ServerFixture):
             def items(self):
                 return [('a', '10'), ('a', '20')]
         res = self.app.post('/params', params=FakeDict())
+
+    def test_without_expect_errors(self):
+        res = self.app.get('/?status=404%20Not%20Found', expect_errors=True)
+        assert res.status_int == 404
