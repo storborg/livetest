@@ -37,7 +37,7 @@ import sys
 import webtest
 import httplib
 import urlparse
-from webtest import BaseCookie, CookieError
+from Cookie import BaseCookie, CookieError
 
 conn_classes = {'http': httplib.HTTPConnection,
                 'https': httplib.HTTPSConnection}
