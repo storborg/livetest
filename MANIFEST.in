@@ -1,2 +1,4 @@
 include *.rst
-recursive-include *.py
+include LICENSE
+include MANIFEST.in
+recursive-include test *.py
