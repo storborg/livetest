@@ -55,7 +55,7 @@ class TestSelect(ServerFixture):
                 ('Content-Type', 'text/html'),
                 ('Content-Length', str(len(body)))]
             start_response(status, headers)
-            return [body]
+            return [body.encode('ascii')]
         return select_app
 
     def test_single_select(self):
@@ -199,7 +199,7 @@ class TestSelectNoDefault(ServerFixture):
                 ('Content-Type', 'text/html'),
                 ('Content-Length', str(len(body)))]
             start_response(status, headers)
-            return [body]
+            return [body.encode('ascii')]
         return select_app_without_default
 
     def test_single_select_no_default(self):
