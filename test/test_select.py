@@ -2,7 +2,7 @@ from webob import Request
 from fixtures import ServerFixture
 
 
-class TestInput(ServerFixture):
+class TestSelect(ServerFixture):
     def make_app(self):
         def select_app(environ, start_response):
             req = Request(environ)
@@ -146,7 +146,7 @@ class TestInput(ServerFixture):
         assert "<p>You selected 24, 88</p>" in display, display
 
 
-class TestInput(ServerFixture):
+class TestSelectNoDefault(ServerFixture):
     def make_app(self):
         def select_app_without_default(environ, start_response):
             req = Request(environ)

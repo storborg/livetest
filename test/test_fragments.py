@@ -3,7 +3,7 @@ from fixtures import ServerFixture
 from webtest.debugapp import debug_app
 
 
-class TestInput(ServerFixture):
+class TestURLFragments(ServerFixture):
     def make_app(self):
         return debug_app
 

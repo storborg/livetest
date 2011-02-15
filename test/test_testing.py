@@ -13,7 +13,7 @@ def raises(exc, func, *args, **kw):
             % (exc, func))
 
 
-class TestInput(ServerFixture):
+class TestBasic(ServerFixture):
     def make_app(self):
         return debug_app
 
