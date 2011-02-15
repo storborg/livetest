@@ -5,12 +5,15 @@ except ImportError:
     use_setuptools()
     from setuptools import setup, find_packages
 
+
+import livetest
+
 setup(name='livetest',
-      version='0.4',
-      description='Make live website tests look like Paste WebTest',
+      version=livetest.__version__,
+      description='Test against a live site with an API like Paste WebTest',
       long_description=file('README.rst').read(),
       classifiers=[
-          "Development Status :: 3 - Alpha",
+          "Development Status :: 4 - Beta",
           "Environment :: Web Environment",
           "Framework :: Paste",
           "Intended Audience :: Developers",
@@ -18,9 +21,9 @@ setup(name='livetest',
           "Topic :: Internet :: WWW/HTTP",
           "Topic :: Software Development :: Testing"
       ],
-      keywords='wsgi test unit tests testing web functional',
+      keywords='http integration wsgi test unit tests testing web functional',
       author='Scott Torborg',
-      author_email='storborg@mit.edu',
+      author_email=livetest.__author__,
       url='http://github.com/storborg/livetest',
       license='MIT',
       packages=find_packages(exclude=['ez_setup', 'tests']),

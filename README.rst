@@ -44,3 +44,8 @@ Test stuff in the response:
 <200 OK text/html body='<!doctype...v>  '/25498>
 >>> resp.status
 '200 OK'
+
+
+Credits
+-------
+Thanks to Edward Dale (scompt) for various fixes.

@@ -32,6 +32,7 @@ Test stuff in the response:
 """
 
 __author__ = 'storborg@mit.edu'
+__version__ = '0.4'
 
 import sys
 import webtest
