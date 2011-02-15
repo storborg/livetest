@@ -1,3 +1,4 @@
 livetest.egg-info/
 .coverage
+cover/
 dist/
