@@ -4,7 +4,7 @@ from fixtures import ServerFixture
 
 class TestInput(ServerFixture):
     def make_app(self):
-        def input_app(environ, start_response):
+        def app(environ, start_response):
             req = Request(environ)
             status = "200 OK"
             body =\
@@ -33,7 +33,7 @@ class TestInput(ServerFixture):
                 ('Content-Length', str(len(body)))]
             start_response(status, headers)
             return [body]
-        return input_app
+        return app
 
     def test_input(self):
         res = self.app.get('/')
@@ -56,7 +56,7 @@ class TestInput(ServerFixture):
 
 class TestInputNoDefault(ServerFixture):
     def make_app(self):
-        def input_app_without_default(environ, start_response):
+        def app(environ, start_response):
             req = Request(environ)
             status = "200 OK"
             body =\
@@ -85,7 +85,7 @@ class TestInputNoDefault(ServerFixture):
                 ('Content-Length', str(len(body)))]
             start_response(status, headers)
             return [body]
-        return input_app_without_default
+        return app
 
     def test_input_no_default(self):
         res = self.app.get('/')

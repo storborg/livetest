@@ -5,7 +5,7 @@ from Cookie import CookieError
 
 class TestCookies(ServerFixture):
     def make_app(self):
-        def input_app(environ, start_response):
+        def app(environ, start_response):
             req = Request(environ)
             res = Response()
             res.body =\
@@ -21,7 +21,7 @@ class TestCookies(ServerFixture):
                 # Set a new cookie.
                 res.set_cookie('taste', 'yummy')
             return res(environ, start_response)
-        return input_app
+        return app
 
     def test_cookie_roundtrip(self):
         # Should be no cookies.
@@ -49,7 +49,7 @@ class TestCookiesMalformed(ServerFixture):
                 ('Set-Cookie', 'bad:cookie=error')]
             start_response(status, headers)
             return [body]
-        return app 
+        return app
 
     def test_cookie_malformed(self):
         try:
