@@ -5,7 +5,6 @@ Inspired by Ian Bicking's excellent `WebTest <http://pythonpaste.org/webtest/>`_
 
 This enables the full platform (app servers, load balancers, routing, DNS, etc) to be tested rather than just the internal WSGI application.
 
-*Note: File uploads are untested.*
 
 Usage
 -----
