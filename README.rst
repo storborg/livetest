@@ -5,6 +5,21 @@ Inspired by Ian Bicking's excellent `WebTest <http://pythonpaste.org/webtest/>`_
 
 This enables the full platform (app servers, load balancers, routing, DNS, etc) to be tested rather than just the internal WSGI application.
 
+Installation
+------------
+
+Simple as::
+
+    $ easy_install livetest
+
+Or with pip::
+
+    $ pip install livetest
+
+Or grab the development version::
+
+    $ easy_install livetest==dev
+
 
 Usage
 -----
@@ -48,3 +63,20 @@ Test stuff in the response:
 Credits
 -------
 Thanks to Edward Dale (scompt) for various fixes.
+
+
+Links
+-----
+* `website <https://github.com/storborg/livetest>`_
+* `WebTest home <http://pythonpaste.org/webtest>`_
+* `development version <https://github.com/storborg/livetest/zipball/master#egg=livetest-dev>`_
+
+
+License
+-------
+
+Livetest is released under the MIT License. See the LICENSE file for more
+information.
+
+
+.. # vim: syntax=rst expandtab tabstop=4 shiftwidth=4 shiftround
