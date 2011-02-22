@@ -6,10 +6,8 @@ except ImportError:
     from setuptools import setup, find_packages
 
 
-import livetest
-
 setup(name='livetest',
-      version=livetest.__version__,
+      version='0.5',
       description='Test against a live site with an API like Paste WebTest',
       long_description=file('README.rst').read(),
       classifiers=[
@@ -23,7 +21,7 @@ setup(name='livetest',
       ],
       keywords='http integration wsgi test unit tests testing web functional',
       author='Scott Torborg',
-      author_email=livetest.__author__,
+      author_email='storborg@mit.edu',
       url='http://github.com/storborg/livetest',
       license='MIT',
       packages=find_packages(exclude=['ez_setup', 'tests']),
